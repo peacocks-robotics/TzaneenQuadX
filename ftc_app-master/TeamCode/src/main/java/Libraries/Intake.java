@@ -28,41 +28,37 @@ public class Intake {
 
     }
 
-    public void extend(double timeout) {
-        ElapsedTime time = new ElapsedTime();
+    public void moveSlides(long time, double power)
+    {
+        intakeSlide.setPower(power);
 
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            intakeSlide.setPower(1);
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         intakeSlide.setPower(0);
     }
 
-    public void retract(double timeout) {
-        ElapsedTime time = new ElapsedTime();
 
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            intakeSlide.setPower(-1);
+
+    public void moveCollection(long time, double power) {
+
+        //Forwards: +
+        //Backwawrds: -
+        intakeMotor.setPower(power);
+
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        intakeSlide.setPower(0);
-    }
 
-    public void collect(double timeout) {
-        ElapsedTime time = new ElapsedTime();
-
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            intakeMotor.setPower(1);
-        }
         intakeMotor.setPower(0);
     }
 
-    public void spitOut(double timeout) {
-        ElapsedTime time = new ElapsedTime();
 
-        while (time.seconds() < timeout && opMode.opModeIsActive()) {
-            intakeMotor.setPower(-0.7);
-        }
-        intakeMotor.setPower(0);
-    }
 
     public void setIntakeGate(double position)
     {

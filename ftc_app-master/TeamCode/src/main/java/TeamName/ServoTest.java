@@ -7,7 +7,7 @@ import Libraries.Intake;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name = "ServoTest", group = "Auto")
+@Autonomous(name = "ServoTest", group = "AutoRed")
 
 public class ServoTest extends LinearOpMode {
     Intake intake;
