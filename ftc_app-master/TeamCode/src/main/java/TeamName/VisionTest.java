@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package TeamName;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class VisionTest {
+import Libraries.Visiontest;
+
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,12 +17,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.internal.ftdi.eeprom.FT_EEPROM_232H;
 
-    @Autonomous(name = "Vision Test Real", group = "Concept")
+    @Autonomous(name = "Vision", group = "Concept")
 //@Disabled
     public class VisionTest extends LinearOpMode {
 
 
-        Vision vision;
+        Visiontest vision;
         public ElapsedTime timer = new ElapsedTime();
 
         String skystonePosition = "";
@@ -41,7 +42,7 @@ import org.firstinspires.ftc.robotcore.internal.ftdi.eeprom.FT_EEPROM_232H;
             telemetry.addLine("Initialized");
             telemetry.update();
 
-            vision = new Vision(this);
+            vision = new Visiontest(this);
 
             while (!isStarted()) {
                 telemetry.addData("Count ", counter);
@@ -82,5 +83,4 @@ import org.firstinspires.ftc.robotcore.internal.ftdi.eeprom.FT_EEPROM_232H;
 
         }
 
-    }    }
-}
+    }
