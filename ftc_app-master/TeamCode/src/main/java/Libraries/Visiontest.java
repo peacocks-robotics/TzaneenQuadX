@@ -1,7 +1,9 @@
 package Libraries;
 
+
 import android.graphics.Bitmap;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Frame;
 import com.vuforia.Image;
@@ -20,18 +22,18 @@ import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 
+@Autonomous(name ="kasinerds", group = "Autonomous")
+public class Visiontest {
 
-public class Vision {
+    public LinearOpMode opMode;
 
-    private LinearOpMode opMode;
+    public VuforiaLocalizer vuforia;
 
-    private VuforiaLocalizer vuforia;
+    public final int RED_THRESHOLD = 140;
+    public final int GREEN_THRESHOLD = 100;
+    public final int BLUE_THRESHOLD = 60;
 
-    private final int RED_THRESHOLD = 140;
-    private final int GREEN_THRESHOLD = 100;
-    private final int BLUE_THRESHOLD = 60;
-
-    public Vision(LinearOpMode opMode) {
+    public Visiontest (LinearOpMode opMode) {
         this.opMode = opMode;
 
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());

@@ -21,7 +21,7 @@ public class Intake {
     public Intake (LinearOpMode opMode) {
 
         intakeMotor = opMode.hardwareMap.dcMotor.get("intakeMotor");
-        intakeSlide = opMode.hardwareMap.dcMotor.get("intakeSlide");
+        intakeSlide = opMode.hardwareMap.dcMotor.get("intakeSpool");
 
 
         intakeGate = opMode.hardwareMap.servo.get("intakeGate");
@@ -56,6 +56,19 @@ public class Intake {
         }
 
         intakeMotor.setPower(0);
+    }
+
+    public void spitOut(long time)
+    {
+        intakeMotor.setPower(-1.0);
+
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        intakeMotor.setPower(0.0);
     }
 
 

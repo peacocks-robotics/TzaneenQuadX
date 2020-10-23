@@ -9,6 +9,7 @@ import TeamName.AutoBlue;
 
 public class Drivetrain {
 
+    private ElapsedTime ElapsedTime;
     private LinearOpMode opMode;
     private Gyro gyro;
 
@@ -20,22 +21,24 @@ public class Drivetrain {
     public Drivetrain(LinearOpMode opMode) {
         this.opMode = opMode;
 
+        ElapsedTime=new ElapsedTime();
+
         gyro = new Gyro(opMode, true);
 
         fl = opMode.hardwareMap.dcMotor.get("fl");
         fr = opMode.hardwareMap.dcMotor.get("fr");
         bl = opMode.hardwareMap.dcMotor.get("bl");
-        br = opMode.hardwareMap.dcMotor.get("br");
+       br = opMode.hardwareMap.dcMotor.get("br");
 
-        fl.setDirection(DcMotorSimple.Direction.REVERSE);
-        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        fl.setDirection(DcMotorSimple.Direction.FORWARD);
+        fr.setDirection(DcMotorSimple.Direction.FORWARD);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+       br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
     }
 
@@ -50,7 +53,7 @@ public class Drivetrain {
         opMode.idle();
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         opMode.idle();
-        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         opMode.idle();
 
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -67,15 +70,15 @@ public class Drivetrain {
     public void setPower(double power) {
         fl.setPower(power);
         fr.setPower(power);
-        bl.setPower(power);
-        br.setPower(power);
+        bl.setPower(-power);
+        br.setPower(-power);
 
     }
 
     public void setPower(double power, long time) {
         fl.setPower(power);
-        bl.setPower(-power);
-        fr.setPower(power);
+        bl.setPower(power);
+        fr.setPower(-power);
         br.setPower(-power);
         try {
             Thread.sleep(time);
@@ -99,32 +102,32 @@ public class Drivetrain {
             fl.setPower(power);
             fr.setPower(-power);
             bl.setPower(power);
-            br.setPower(-power);
+           br.setPower(-power);
 
         }
 
-        // turns left
+        //turns left
         else {
             fl.setPower(-power);
             fr.setPower(power);
             bl.setPower(-power);
-            br.setPower(power);
+           br.setPower(power);
 
         }
 
     }
 
-    public void turn(double power, boolean right, long time) {
+    public void turn(double power, long time, boolean right) {
         if (!right) {
-            fl.setPower(-power);
-            bl.setPower(power);
-            fr.setPower(power);
-            br.setPower(-power);
+            fl.setPower(0.9);
+            bl.setPower(0.9);
+            fr.setPower(0.9);
+            br.setPower(0.9);
         } else {
-            fl.setPower(power);
-            bl.setPower(-power);
-            fr.setPower(-power);
-            br.setPower(power);
+            fl.setPower(0.9);
+            bl.setPower(0.9);
+            fr.setPower(0.9);
+           br.setPower(0.9);
         }
 
         try {
@@ -136,19 +139,28 @@ public class Drivetrain {
         stopMotors();
     }
 
+    public void sleep(long time)
+    {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void strafe(double power, boolean right) {
         if (right) {
-            fl.setPower(-power);
-            fr.setPower(power);
-            bl.setPower(power);
-            br.setPower(-power);
+            fl.setPower(-0.9);
+            fr.setPower(0.9);
+            bl.setPower(0.9);
+           br.setPower(-0.9);
 
         }
         else {
-            fl.setPower(power);
-            fr.setPower(-power);
-            bl.setPower(-power);
-            br.setPower(power);
+            fl.setPower(0.9);
+            fr.setPower(-0.9);
+            bl.setPower(-0.9);
+            br.setPower(0.9);
 
         }
 
@@ -156,23 +168,23 @@ public class Drivetrain {
 
     public void diagonal(double power, boolean right, boolean forward) {
         if (right && forward) {
-            fl.setPower(power);
-            br.setPower(power);
+            fl.setPower(0.9);
+           br.setPower(0.9);
 
         }
         else if (!right && forward){
-            fr.setPower(power);
-            bl.setPower(power);
+            fr.setPower(0.9);
+            bl.setPower(0.9);
 
         }
         else if (right) {
-            fr.setPower(-power);
-            bl.setPower(-power);
+            fr.setPower(-0.9);
+            bl.setPower(-0.9);
 
         }
         else {
-            fl.setPower(-power);
-            br.setPower(-power);
+            fl.setPower(-0.9);
+           br.setPower(-0.9);
 
         }
 
@@ -198,13 +210,13 @@ public class Drivetrain {
         }
 
         if (countZeros == 4) {
-            return 0;
+          return 0;
         }
 
-        return (Math.abs(fl.getCurrentPosition()) +
+       return (Math.abs(fl.getCurrentPosition()) +
                 Math.abs(fr.getCurrentPosition()) +
-                Math.abs(bl.getCurrentPosition()) +
-                Math.abs(br.getCurrentPosition())) / (4 - countZeros);
+               Math.abs(bl.getCurrentPosition()) +
+               Math.abs(br.getCurrentPosition())) / (4 - countZeros);
 
     }
 

@@ -1,0 +1,4 @@
+package TeamName;
+
+class Vision {
+}
